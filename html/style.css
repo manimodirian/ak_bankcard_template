@@ -1,0 +1,147 @@
+/*
+ * ============================================
+ * AK BANK ATM SYSTEM - STYLING
+ * ============================================
+ * 
+ * TODO: Complete all styling for:
+ * - PIN entry interface
+ * - Bank menu interface
+ * - Credit card display
+ * - Buttons and inputs
+ * - Responsive design
+ * - Animations and transitions
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* ============================================
+   PIN SCREEN STYLES
+   TODO: Add complete PIN screen styling
+   ============================================ */
+
+#pin-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.pin-container {
+    /* TODO: Style PIN container */
+    /* - Background color */
+    /* - Width and height */
+    /* - Border radius */
+    /* - Box shadow */
+}
+
+.pin-display {
+    /* TODO: Style PIN display area */
+}
+
+.pin-dots {
+    /* TODO: Create dot indicators for PIN entry */
+    display: flex;
+    gap: 10px;
+    /* Add your styling here */
+}
+
+.pin-keypad {
+    /* TODO: Create keypad grid layout */
+    /* Use CSS Grid or Flexbox */
+    /* Style buttons with appropriate sizing */
+}
+
+.pin-keypad button {
+    /* TODO: Style keypad buttons */
+    /* - Size */
+    /* - Colors */
+    /* - Hover effects */
+    /* - Click effects */
+}
+
+.pin-label {
+    /* TODO: Style PIN label text */
+}
+
+/* ============================================
+   BANK MENU STYLES
+   TODO: Add complete bank menu styling
+   ============================================ */
+
+#bank-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.bank-container {
+    /* TODO: Style bank container */
+    /* - Background */
+    /* - Layout */
+    /* - Spacing */
+}
+
+.credit-card {
+    /* TODO: Design credit card styling */
+    /* - Gradient background */
+    /* - Card dimensions */
+    /* - Text styling */
+    /* - Chip appearance */
+}
+
+.account-info {
+    /* TODO: Style account information display */
+}
+
+.transaction-buttons {
+    /* TODO: Create transaction button layout */
+    /* - Button grid */
+    /* - Button styling */
+    /* - Hover states */
+}
+
+.transaction-input {
+    /* TODO: Style amount input area */
+}
+
+/* ============================================
+   ANIMATIONS
+   TODO: Add smooth transitions and animations
+   ============================================ */
+
+/* TODO: Add fade-in animation for screens */
+/* TODO: Add button press animation */
+/* TODO: Add transition effects */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* TODO: Add more keyframe animations as needed */

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK Bank ATM System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <!-- ============================================
+         PIN INPUT SCREEN
+         TODO: Complete PIN entry interface styling
+         ============================================ -->
+    <div id="pin-wrapper" style="display: none;">
+        <div class="pin-container">
+            <div class="pin-display">
+                <!-- TODO: Add PIN dots display -->
+                <div class="pin-dots">
+                    <!-- PIN indicators here -->
+                </div>
+            </div>
+            
+            <div class="pin-keypad">
+                <!-- TODO: Add keypad buttons (0-9) -->
+                <!-- TODO: Add Cancel button -->
+                <!-- TODO: Add Clear button -->
+                <!-- TODO: Add logic to handle button clicks -->
+            </div>
+            
+            <p class="pin-label">Enter PIN Code</p>
+        </div>
+    </div>
+
+    <!-- ============================================
+         BANK MENU SCREEN
+         TODO: Complete bank account interface
+         ============================================ -->
+    <div id="bank-wrapper" style="display: none;">
+        <div class="bank-container">
+            <!-- TODO: Design credit card display -->
+            <div class="credit-card">
+                <div class="bank-name">AK BANK</div>
+                <div class="chip"></div>
+                <div class="card-number" id="ibanText">TR00 0000 0000</div>
+                <div class="card-holder">
+                    <div class="label">CARDHOLDER</div>
+                    <div id="playerName">Name Surname</div>
+                </div>
+                <div class="visa-logo">VISA</div>
+            </div>
+
+            <!-- TODO: Add account information display -->
+            <div class="account-info">
+                <!-- Balance display -->
+                <!-- Account type -->
+                <!-- Last transaction info -->
+            </div>
+
+            <!-- TODO: Add transaction buttons -->
+            <div class="transaction-buttons">
+                <!-- Deposit button -->
+                <!-- Withdraw button -->
+                <!-- Transfer button -->
+                <!-- Close button -->
+            </div>
+
+            <!-- TODO: Add amount input field for transactions -->
+            <div class="transaction-input" style="display: none;">
+                <!-- Input field for amount -->
+                <!-- Confirm button -->
+                <!-- Cancel button -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
