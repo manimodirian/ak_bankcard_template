@@ -1,53 +1,51 @@
-# AK Bank Card & ATM System - Template Edition
+# [SCRIPT_NAME] v[VERSION]
 
-This is a template version of the AK Bank Card & ATM system for FiveM. This version is incomplete and requires implementation.
+Last Updated: [CURRENT_DATE]
 
-## Features to Implement
+## English
 
-- [ ] ATM Target System Setup (qb-target)
-- [ ] Card Reading and Validation
-- [ ] PIN Code System
-- [ ] NUI (Lua to JavaScript) Communication
-- [ ] Bank Menu Interface
-- [ ] Deposit and Withdrawal Functions
-- [ ] Balance Update System
+### Description
+[SCRIPT_NAME] is a basic banking script for FiveM servers using QB-Core framework. It allows players to use bank cards at ATMs for secure transactions including deposits and withdrawals.
 
-## File Structure
+### Features
+- Bank card item integration
+- ATM interaction with target system
+- PIN verification system
+- Deposit and withdrawal operations
+- Basic UI interface
+- Automatic bank card assignment to new players
 
-```
-client/main.lua      - Client-side logic (to be completed)
-server/main.lua      - Server-side logic (to be completed)
-html/ui.html         - HTML UI Structure (to be completed)
-html/style.css       - UI Styling (to be completed)
-html/script.js       - JavaScript Logic (to be completed)
-```
-
-## Dependencies
-
-- QB-Core Framework
+### Requirements
+- FiveM server
+- QB-Core framework
 - qb-target
-- qb-progressbar (optional)
 
-## Installation
+### Installation
+1. Download the script files
+2. Place the `[SCRIPT_NAME]` folder in your server's resources directory
+3. Add `ensure [SCRIPT_NAME]` to your server.cfg
+4. Restart your server
 
-1. Place the `ak_bankcard_template` folder in your resources directory
-2. Add to your server.cfg:
-   ```
-   ensure ak_bankcard_template
-   ```
-3. Complete the implementation according to the guides in each file
+### Configuration
+- Default PIN for new cards: [DEFAULT_PIN]
+- Configurable ATM models in client/main.lua
+- UI can be customized in html/ folder
 
-## Implementation Notes
+### Usage
+1. Players receive a bank card automatically upon joining
+2. Approach an ATM and use the target option to insert card
+3. Enter PIN (default: [DEFAULT_PIN])
+4. Access banking menu for transactions
 
-Each file contains detailed comments explaining what needs to be implemented. Follow the structure and add your custom logic where indicated.
+### License
+This script is for sale. Contact the author for licensing information.
 
 ---
 
-**Note**: This is a template version. For the complete, production-ready version, contact the developer.
+## Türkçe
 
----
-
-# AK Banka Kartı & ATM Sistemi - Template Versiyonu
+### Açıklama
+[SCRIPT_NAME] v[VERSION], QB-Core framework kullanan FiveM sunucuları için temel bir bankacılık scriptidir. Oyuncuların ATM'lerde banka kartlarını kullanarak para yatırma ve çekme işlemlerini yapmalarını sağlar.
 
 Bu, FiveM için AK Banka Kartı & ATM sisteminin şablon versiyonudur. Bu versiyon eksik olup uygulamayı gerektirir.
 

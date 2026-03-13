@@ -1,53 +1,38 @@
-# License - AK Bank Card System
+# [SCRIPT_NAME] License v[VERSION]
 
-## Template Version
+Last Updated: [CURRENT_DATE]
 
-This is a **template/incomplete version** of the AK Bank Card System for FiveM. 
+## English
 
-### Your Rights
+This script ([SCRIPT_NAME]) is proprietary software and is available for purchase only.
 
-By purchasing this template, you have the right to:
+### Terms of Use:
+1. **Purchase Required**: You must purchase a license from the author to use this script on your FiveM server.
+2. **Single Server Use**: Each license is valid for one FiveM server only. Additional servers require separate licenses.
+3. **No Redistribution**: You may not redistribute, sell, or share this script or its code without explicit permission from the author.
+4. **Modifications**: You may modify the script for personal use on your licensed server, but modified versions cannot be redistributed.
+5. **Support**: Basic support is provided for licensed users. Contact the author for support requests.
+6. **Liability**: The author is not liable for any damages or issues caused by the use of this script.
+7. **Termination**: License can be terminated if terms are violated.
 
-✅ Download and modify the source code  
-✅ Use it on your own FiveM server  
-✅ Customize it for your specific needs  
-✅ Host it privately on your server  
-✅ Modify and redistribute the completed version  
-
-### Your Restrictions
-
-❌ You may **NOT** resell this template directly as-is  
-❌ You may **NOT** claim you created the original concept  
-❌ You may **NOT** publish the original template publicly on GitHub/forum  
-❌ You may **NOT** remove this license from the code  
-
-### What You Can Do with Your Finished Version
-
-Once you have completed and customized this template:
-- ✅ Resell your completed version
-- ✅ Publish your modifications
-- ✅ Use it commercially
-- ✅ Include it in a framework or script pack
-
-## Support & Updates
-
-- **Support**: Limited to installation and implementation guidance
-- **Updates**: Check the documentation for setup requirements
-- **Issues**: Report implementation issues only, not original code
-
-## Disclaimer
-
-This template is provided "as-is" without warranty. The creator is not responsible for:
-- Server downtime or data loss
-- Compatibility issues with other scripts
-- Misuse of the system
-- Economic impact on your server
-
-## Questions?
-
-For licensing questions or custom arrangements, contact the creator before purchase.
+For licensing inquiries, contact: [CONTACT_INFO]
 
 ---
+
+## Türkçe
+
+Bu script ([SCRIPT_NAME] v[VERSION]) mülkiyet yazılımıdır ve sadece satın alınarak kullanılabilir.
+
+### Kullanım Koşulları:
+1. **Satın Alma Gerekli**: Bu scripti FiveM sunucunuzda kullanabilmek için yazardan lisans satın almanız gerekir.
+2. **Tek Sunucu Kullanımı**: Her lisans sadece bir FiveM sunucusu için geçerlidir. Ek sunucular için ayrı lisans gereklidir.
+3. **Yeniden Dağıtım Yok**: Bu scripti veya kodunu yazardan açık izin almadan yeniden dağıtmayınız, satmayınız veya paylaşmayınız.
+4. **Değişiklikler**: Lisanslı sunucunuzda kişisel kullanım için scripti değiştirebilirsiniz, ancak değiştirilmiş sürümler yeniden dağıtılamaz.
+5. **Destek**: Lisanslı kullanıcılar için temel destek sağlanır. Destek talepleri için yazarla iletişime geçin.
+6. **Sorumluluk**: Yazar, bu scriptin kullanımı nedeniyle oluşan herhangi bir hasar veya sorun için sorumlu değildir.
+7. **Fesih**: Koşullar ihlal edilirse lisans feshedilebilir.
+
+Lisans sorguları için iletişime geçin: [CONTACT_INFO]
 
 **Template Version**: 1.0.0  
 **Updated**: March 2026  

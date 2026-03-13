@@ -2,74 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AK Bank ATM System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>[SCRIPT_NAME] ATM</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <!-- ============================================
-         PIN INPUT SCREEN
-         TODO: Complete PIN entry interface styling
-         ============================================ -->
-    <div id="pin-wrapper" style="display: none;">
-        <div class="pin-container">
-            <div class="pin-display">
-                <!-- TODO: Add PIN dots display -->
+
+    <div id="pin-wrapper">
+        <div class="atm-container">
+            <div class="pin-header">
+                <div class="shield-icon">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <h1>SECURITY LOGIN</h1>
+                <p>Please enter your 4-digit PIN code</p>
+            </div>
+
+            <div class="pin-display-panel">
                 <div class="pin-dots">
-                    <!-- PIN indicators here -->
+                    <div class="dot" id="dot-1"></div>
+                    <div class="dot" id="dot-2"></div>
+                    <div class="dot" id="dot-3"></div>
+                    <div class="dot" id="dot-4"></div>
                 </div>
             </div>
-            
+
             <div class="pin-keypad">
-                <!-- TODO: Add keypad buttons (0-9) -->
-                <!-- TODO: Add Cancel button -->
-                <!-- TODO: Add Clear button -->
-                <!-- TODO: Add logic to handle button clicks -->
+                <button class="key" onclick="addPin(1)">1</button>
+                <button class="key" onclick="addPin(2)">2</button>
+                <button class="key" onclick="addPin(3)">3</button>
+                <button class="key" onclick="addPin(4)">4</button>
+                <button class="key" onclick="addPin(5)">5</button>
+                <button class="key" onclick="addPin(6)">6</button>
+                <button class="key" onclick="addPin(7)">7</button>
+                <button class="key" onclick="addPin(8)">8</button>
+                <button class="key" onclick="addPin(9)">9</button>
+                <button class="key btn-cancel" onclick="closeUI()"><i class="fas fa-times"></i></button>
+                <button class="key" onclick="addPin(0)">0</button>
+                <button class="key btn-clear" onclick="clearPin()"><i class="fas fa-backspace"></i></button>
             </div>
-            
-            <p class="pin-label">Enter PIN Code</p>
         </div>
     </div>
 
-    <!-- ============================================
-         BANK MENU SCREEN
-         TODO: Complete bank account interface
-         ============================================ -->
     <div id="bank-wrapper" style="display: none;">
-        <div class="bank-container">
-            <!-- TODO: Design credit card display -->
-            <div class="credit-card">
-                <div class="bank-name">AK BANK</div>
-                <div class="chip"></div>
-                <div class="card-number" id="ibanText">TR00 0000 0000</div>
-                <div class="card-holder">
-                    <div class="label">CARDHOLDER</div>
-                    <div id="playerName">Name Surname</div>
+        <div class="main-bank-ui">
+            <div class="sidebar">
+                <div class="brand">
+                    <i class="fas fa-building-columns"></i>
+                    <span>[SCRIPT_NAME]</span>
                 </div>
-                <div class="visa-logo">VISA</div>
+                <nav>
+                    <button class="nav-btn active" onclick="switchTab('main')">
+                        <i class="fas fa-wallet"></i> ACCOUNT SUMMARY
+                    </button>
+                </nav>
+                <button class="logout-btn" onclick="closeUI()">
+                    <i class="fas fa-right-from-bracket"></i> RETURN CARD
+                </button>
             </div>
 
-            <!-- TODO: Add account information display -->
-            <div class="account-info">
-                <!-- Balance display -->
-                <!-- Account type -->
-                <!-- Last transaction info -->
-            </div>
+            <div class="content">
+                
+                <div id="tab-main" class="tab-content active">
+                    <div class="premium-card">
+                        <div class="card-inner">
+                            <div class="card-header">
+                                <span class="card-type">DEBIT CARD</span>
+                                <i class="fab fa-cc-mastercard"></i>
+                            </div>
+                            <div class="card-chip"></div>
+                            <div class="card-number" id="ibanText">TR00 0000 0000 0000</div>
+                            <div class="card-footer">
+                                <span id="playerName">FULL NAME</span>
+                                <span class="exp">12/29</span>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- TODO: Add transaction buttons -->
-            <div class="transaction-buttons">
-                <!-- Deposit button -->
-                <!-- Withdraw button -->
-                <!-- Transfer button -->
-                <!-- Close button -->
-            </div>
+                    <div class="balance-section">
+                        <div class="balance-card">
+                            <span class="label">AVAILABLE BALANCE</span>
+                            <h2 id="balanceText">$0</h2>
+                        </div>
+                        <div class="quick-deposit-withdraw">
+                            <input type="number" id="amount" placeholder="ENTER AMOUNT..." min="1">
+                            <div class="btn-row">
+                                <button class="btn dep" onclick="action('deposit')">DEPOSIT</button>
+                                <button class="btn wit" onclick="action('withdraw')">WITHDRAW</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- TODO: Add amount input field for transactions -->
-            <div class="transaction-input" style="display: none;">
-                <!-- Input field for amount -->
-                <!-- Confirm button -->
-                <!-- Cancel button -->
             </div>
         </div>
     </div>

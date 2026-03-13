@@ -1,6 +1,10 @@
-# Implementation Guide - AK Bank Card System
+# [SCRIPT_NAME] Implementation Guide v[VERSION]
 
-This guide provides a step-by-step approach to completing the template code.
+Last Updated: [CURRENT_DATE]
+
+## Basic ATM System Features
+
+This template includes a basic ATM system with PIN verification, deposit, and withdrawal functionality.
 
 ## Phase 1: Server-Side Basics
 
@@ -43,7 +47,7 @@ Register targets for ATM models:
 ```lua
 exports['qb-target']:AddTargetModel({model list}, {
     options = {
-        event = "ak_bankcard:client:CardControl"
+        event = "[SCRIPT_NAME]:client:CardControl"
     }
 })
 ```
@@ -52,7 +56,7 @@ exports['qb-target']:AddTargetModel({model list}, {
 When player interacts with ATM:
 - Check if player has bank_card
 - Start ATM animation
-- Show progressbar (optional)
+- Show progressbar
 - Request PIN from server after animation
 
 ### 2.3 PIN Display Event
@@ -76,14 +80,9 @@ When server sends PIN:
 - Have clear/cancel buttons
 
 ### 3.2 Bank Menu Screen
-- Display credit card design
-- Show account details:
-  - Cardholder name
-  - IBAN/Account number
-  - Balance
-- Transaction buttons:
-  - Deposit
-  - Withdraw
+- Display basic account details
+- Show balance
+- Transaction buttons: Deposit, Withdraw
 
 ### 3.3 JavaScript Logic
 - Handle NUI messages
@@ -91,25 +90,6 @@ When server sends PIN:
 - Send callbacks back to FiveM
 - Update UI dynamically
 - Handle errors gracefully
-
-## Phase 4: Advanced Features (Optional)
-
-### 4.1 Transaction History
-Track and display recent transactions
-
-### 4.2 PIN Change
-Allow players to change their PIN
-
-### 4.3 Multiple ATMs
-Create different ATM locations
-
-### 4.4 Database Logging
-Log all transactions for admin review
-
-### 4.5 Security Features
-- Account lockout after failed PINs
-- Transaction limits
-- Time-based access restrictions
 
 ## Common Implementation Patterns
 
@@ -135,7 +115,7 @@ local info = item.info -- Contains custom data
 ### NUI Communication
 ```lua
 -- Send to client
-TriggerClientEvent('ak_bankcard:client:Event', src, data)
+TriggerClientEvent('[SCRIPT_NAME]:client:Event', src, data)
 
 -- From client to HTML
 SendNUIMessage({type = 'openPin', pin = pinCode})
@@ -143,61 +123,6 @@ SendNUIMessage({type = 'openPin', pin = pinCode})
 -- Callback from HTML to client
 $.post('https://' + GetParentResourceName() + '/callbackName', JSON.stringify(data), function(data) {})
 ```
-
-## Testing Checklist
-
-- [ ] Script starts without errors
-- [ ] Players receive bank card on spawn
-- [ ] Can interact with ATM models
-- [ ] PIN entry screen appears
-- [ ] Correct PIN opens bank menu
-- [ ] Wrong PIN shows error
-- [ ] Deposit/withdraw works
-- [ ] Balance updates correctly
-- [ ] Transactions are reversible
-- [ ] No duplication of money possible
-- [ ] UI closes properly
-- [ ] Animation clears on close
-
-## Performance Optimization
-
-- Minimize NUI message frequency
-- Use debouncing for rapid interactions
-- Optimize database queries
-- Clean up event listeners
-- Remove debug logging in production
-
----
-
-**Remember**: Always test thoroughly before deploying to a live server!
-
----
-
-# Uygulama Rehberi - AK Banka Kartı Sistemi
-
-Bu rehber, şablon kodunu tamamlamaya adım adım bir yaklaşım sağlar.
-
-## Aşama 1: Sunucu Tarafı Temelleri
-
-### 1.1 QB-Core'u Dışarı Aktarın
-```lua
-local QBCore = exports['qb-core']:GetCoreObject()
-```
-
-### 1.2 Oyuncu Yükleme Olayını Uygulayın
-Bir oyuncu yüklendiğinde, ona bir banka kartı verin:
-- Oyuncu nesnesini alın
-- `bank_card` öğesine sahip olup olmadığını kontrol edin
-- Değilse, oluşturun: citizenid, kart sahibi adı, IBAN, PIN
-
-### 1.3 PIN İstek Olayını Oluşturun
-Oyuncu ATM'yi kullandığında:
-- Oyuncunun envanterinden bank_card alın
-- PIN'i kart meta verilerinden çıkarın
-- Doğrulama için PIN'i istemciye gönderin
-
-### 1.4 Veri Alma Olayı
-PIN doğrulandığında:
 - Oyuncunun tam adını alın
 - Oyuncunun IBAN/hesap numarasını alın
 - Oyuncunun banka bakiyesini alın

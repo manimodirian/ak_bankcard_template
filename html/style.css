@@ -1,147 +1,170 @@
-/*
- * ============================================
- * AK BANK ATM SYSTEM - STYLING
- * ============================================
- * 
- * TODO: Complete all styling for:
- * - PIN entry interface
- * - Bank menu interface
- * - Credit card display
- * - Buttons and inputs
- * - Responsive design
- * - Animations and transitions
- */
+/* Fontlar */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: rgba(0, 0, 0, 0.8);
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: transparent !important;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    font-family: 'Rajdhani', sans-serif;
+    color: #fff;
 }
 
-/* ============================================
-   PIN SCREEN STYLES
-   TODO: Add complete PIN screen styling
-   ============================================ */
-
-#pin-wrapper {
+/* --- KAPSAYICILAR --- */
+#pin-wrapper, #bank-wrapper {
+    display: none; 
+    position: absolute;
     width: 100%;
     height: 100%;
-    display: flex;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.98) 100%);
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
+    z-index: 999;
 }
 
-.pin-container {
-    /* TODO: Style PIN container */
-    /* - Background color */
-    /* - Width and height */
-    /* - Border radius */
-    /* - Box shadow */
+/* --- PIN EKRANI --- */
+.atm-container {
+    background: #0a0a0a;
+    padding: 40px;
+    border-radius: 24px;
+    width: 480px;
+    border: 1px solid #1a1a1a;
+    box-shadow: 0 0 60px rgba(0,0,0,0.9), inset 0 0 30px rgba(52, 152, 219, 0.03);
+    text-align: center;
+    transition: all 0.3s ease; /* Renk geçişleri için */
 }
 
-.pin-display {
-    /* TODO: Style PIN display area */
+/* --- 1. DÜZELTME: PIN HATALI OLDUĞUNDA KIRMIZI ALARM --- */
+.atm-container.error {
+    background: linear-gradient(135deg, #1a0505 0%, #0a0a0a 100%);
+    border-color: #ff3333;
+    box-shadow: 0 0 80px rgba(231, 76, 60, 0.4), inset 0 0 40px rgba(231, 76, 60, 0.2);
+    animation: shake 0.4s ease-in-out;
 }
 
-.pin-dots {
-    /* TODO: Create dot indicators for PIN entry */
+.atm-container.error .pin-header h1, 
+.atm-container.error .pin-header p {
+    color: #ff3333;
+    text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+}
+
+.atm-container.error .dot.filled::after {
+    background: #ff3333;
+    box-shadow: 0 0 10px #ff3333;
+}
+
+.pin-header h1 { font-family: 'Orbitron', sans-serif; letter-spacing: 4px; font-size: 22px; margin: 15px 0 5px; color: #3498db; }
+.pin-header p { color: #555; font-size: 11px; letter-spacing: 1px; }
+
+.pin-display-panel { background: rgba(0, 0, 0, 0.6); border: 1px solid #151515; border-radius: 16px; padding: 20px; margin: 25px 0; }
+.pin-dots { display: flex; justify-content: center; gap: 12px; }
+.dot { width: 60px; height: 80px; background: #080808; border: 1px solid #1a1a1a; border-radius: 12px; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
+.dot.active { border-color: #3498db; box-shadow: 0 0 15px rgba(52, 152, 219, 0.3); transform: scale(1.05); }
+.dot.filled::after { content: ''; width: 14px; height: 14px; background: #3498db; border-radius: 50%; box-shadow: 0 0 10px #3498db; animation: dotPop 0.2s; }
+
+.pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 280px; margin: 0 auto; }
+.key { height: 55px; background: #0d0d0d; border: 1px solid #1a1a1a; color: #fff; border-radius: 12px; font-family: 'Orbitron'; font-size: 18px; cursor: pointer; transition: 0.2s; }
+.key:hover { background: #3498db; color: #000; border-color: #3498db; }
+
+/* --- ANA BANKA ARAYÜZÜ --- */
+.main-bank-ui {
     display: flex;
-    gap: 10px;
-    /* Add your styling here */
+    width: 900px;
+    height: 580px;
+    background: #080808;
+    border-radius: 24px;
+    border: 1px solid #1a1a1a;
+    overflow: hidden;
+    box-shadow: 0 0 100px rgba(0,0,0,0.9);
 }
 
-.pin-keypad {
-    /* TODO: Create keypad grid layout */
-    /* Use CSS Grid or Flexbox */
-    /* Style buttons with appropriate sizing */
+.sidebar {
+    width: 240px;
+    background: #050505;
+    border-right: 1px solid #151515;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
 }
 
-.pin-keypad button {
-    /* TODO: Style keypad buttons */
-    /* - Size */
-    /* - Colors */
-    /* - Hover effects */
-    /* - Click effects */
-}
+.brand { display: flex; align-items: center; gap: 12px; font-family: 'Orbitron'; color: #3498db; font-size: 20px; margin-bottom: 40px; padding-left: 10px; }
+.sidebar nav { flex: 1; }
 
-.pin-label {
-    /* TODO: Style PIN label text */
-}
-
-/* ============================================
-   BANK MENU STYLES
-   TODO: Add complete bank menu styling
-   ============================================ */
-
-#bank-wrapper {
+.nav-btn {
     width: 100%;
-    height: 100%;
+    background: transparent;
+    border: none;
+    color: #555;
+    padding: 16px;
+    text-align: left;
+    font-family: 'Rajdhani';
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    transition: 0.3s;
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
+    gap: 15px;
 }
 
-.bank-container {
-    /* TODO: Style bank container */
-    /* - Background */
-    /* - Layout */
-    /* - Spacing */
+.nav-btn i { font-size: 18px; width: 20px; }
+.nav-btn:hover { color: #fff; background: rgba(255,255,255,0.02); }
+.nav-btn.active { background: #3498db; color: #000; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3); }
+
+.logout-btn { background: rgba(231, 76, 60, 0.1); border: none; color: #e74c3c; padding: 15px; border-radius: 12px; cursor: pointer; font-family: 'Rajdhani'; font-weight: 700; transition: 0.3s; }
+.logout-btn:hover { background: #e74c3c; color: #fff; }
+
+.content { flex: 1; padding: 40px; background: radial-gradient(circle at top right, #0d0d0d 0%, #080808 100%); position: relative; }
+.tab-content { display: none; height: 100%; animation: tabFade 0.4s ease; }
+.tab-content.active { display: block; }
+
+@keyframes tabFade { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+
+.premium-card {
+    width: 380px;
+    height: 220px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid #252525;
+    margin-bottom: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
 }
 
-.credit-card {
-    /* TODO: Design credit card styling */
-    /* - Gradient background */
-    /* - Card dimensions */
-    /* - Text styling */
-    /* - Chip appearance */
-}
+.premium-card::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.02), transparent); transform: rotate(45deg); pointer-events: none; }
+.card-header { display: flex; justify-content: space-between; align-items: center; color: #3498db; font-family: 'Orbitron'; font-size: 12px; }
+.card-header i { font-size: 30px; color: #fff; opacity: 0.8; }
+.card-chip { width: 45px; height: 32px; background: linear-gradient(135deg, #d4af37, #f9e18b); border-radius: 6px; margin: 25px 0; }
+.card-number { font-family: 'Orbitron'; font-size: 18px; letter-spacing: 3px; color: #eee; margin-bottom: 25px; }
+.card-footer { display: flex; justify-content: space-between; font-size: 14px; color: #777; font-weight: 600; }
 
-.account-info {
-    /* TODO: Style account information display */
-}
+.balance-section { display: flex; gap: 25px; align-items: flex-end; }
+.balance-card { flex: 1; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid #151515; }
+.balance-card .label { font-size: 12px; color: #555; letter-spacing: 1px; }
+.balance-card h2 { font-family: 'Orbitron'; font-size: 32px; color: #3498db; margin-top: 5px; }
 
-.transaction-buttons {
-    /* TODO: Create transaction button layout */
-    /* - Button grid */
-    /* - Button styling */
-    /* - Hover states */
-}
+.quick-deposit-withdraw { width: 220px; }
+.quick-deposit-withdraw input { width: 100%; background: #000; border: 1px solid #222; padding: 12px; border-radius: 8px; color: #fff; font-family: 'Rajdhani'; font-size: 16px; margin-bottom: 10px; text-align: center; }
+.btn-row { display: flex; gap: 10px; }
+.btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-family: 'Rajdhani'; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.btn.dep { background: #2ecc71; color: #000; }
+.btn.wit { background: #e67e22; color: #000; }
+.btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
 
-.transaction-input {
-    /* TODO: Style amount input area */
-}
-
-/* ============================================
-   ANIMATIONS
-   TODO: Add smooth transitions and animations
-   ============================================ */
-
-/* TODO: Add fade-in animation for screens */
-/* TODO: Add button press animation */
-/* TODO: Add transition effects */
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* TODO: Add more keyframe animations as needed */
+/* Animasyonlar */
+@keyframes dotPop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }

@@ -1,102 +1,93 @@
 ---@diagnostic disable: undefined-global
+local QBCore = exports['qb-core']:GetCoreObject()
 
--- TODO: Export QBCore from qb-core resource
--- local QBCore = exports['qb-core']:GetCoreObject()
+-- --- 1. ADIM: Otomatik Kart Verme ---
+RegisterNetEvent('QBCore:Server:OnPlayerLoaded', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
 
--- ============================================
--- STEP 1: AUTO-GIVE CARD ON PLAYER LOAD
--- ============================================
--- TODO: Register event for when player loads into game
--- RegisterNetEvent('QBCore:Server:OnPlayerLoaded', function()
---     -- TODO: Implement logic:
---     -- 1. Get player from source
---     -- 2. Check if player already has bank_card
---     -- 3. If not, create card with:
---     --    - Player's name
---     --    - Player's IBAN/Account number
---     --    - Default PIN code (1234)
---     -- 4. Add item to player's inventory
--- end)
+    local bankCard = Player.Functions.GetItemByName('bank_card')
+    if not bankCard then
+        local info = {
+            citizenid = Player.PlayerData.citizenid,
+            cardholder = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+            iban = Player.PlayerData.charinfo.account,
+            pin = "[DEFAULT_PIN]"
+        }
+        Player.Functions.AddItem('bank_card', 1, false, info)
+        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['bank_card'], "add")
+    end
+end)
 
+-- --- 2. ADIM: PIN Bilgisini Metadata'dan Çekme ---
+RegisterNetEvent('[SCRIPT_NAME]:server:PinBilgisiIste', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
 
--- ============================================
--- STEP 2: RETRIEVE BANK DATA
--- ============================================
--- TODO: Register event to fetch player bank data
--- RegisterNetEvent('ak_bankcard:server:GetData', function()
---     local src = source
---     -- TODO: Implement:
---     -- 1. Get player object from source
---     -- 2. Extract:
---     --    - Player name (first + last name)
---     --    - Player's account/IBAN
---     --    - Player's bank balance
---     -- 3. Send data back to client
--- end)
+    local cardItem = Player.Functions.GetItemByName('bank_card')
+    local pinCode = "[DEFAULT_PIN]"
+    
+    if cardItem and cardItem.info and cardItem.info.pin then
+        pinCode = tostring(cardItem.info.pin)
+        if pinCode == "0" or string.len(pinCode) < 4 then
+            pinCode = "[DEFAULT_PIN]"
+        end
+    end
+    TriggerClientEvent('[SCRIPT_NAME]:client:PinAc', src, pinCode)
+end)
 
+-- --- 3. ADIM: VERİLERİ GETİR ---
+RegisterNetEvent('[SCRIPT_NAME]:server:VerileriGetir', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
 
--- ============================================
--- STEP 3: PIN CODE REQUEST
--- ============================================
--- TODO: Register event when player inserts card at ATM
--- RegisterNetEvent('ak_bankcard:server:RequestPinInfo', function()
---     local src = source
---     -- TODO: Implement:
---     -- 1. Get player object
---     -- 2. Get bank_card item from player
---     -- 3. Extract PIN from card metadata/info
---     -- 4. Send PIN code to client for verification
---     -- 5. If card not found, send error
--- end)
+    local data = {
+        name = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname,
+        iban = Player.PlayerData.charinfo.account,
+        balance = Player.PlayerData.money.bank
+    }
+    TriggerClientEvent('[SCRIPT_NAME]:client:BankaMenuAc', src, data)
+end)
 
+-- --- 4. ADIM: ENVANTERDEN KULLANIM ---
+QBCore.Functions.CreateUseableItem("bank_card", function(source)
+    TriggerClientEvent('[SCRIPT_NAME]:client:KartKontrol', source)
+end)
 
--- ============================================
--- STEP 4: BANK TRANSACTIONS (DEPOSIT/WITHDRAW)
--- ============================================
--- TODO: Register event for bank operations
--- RegisterNetEvent('ak_bankcard:server:ProcessTransaction', function(action, amount)
---     local src = source
---     -- TODO: Implement:
---     
---     -- 1. VALIDATION:
---     --    - Get player object
---     --    - Validate amount (must be positive number)
---     --    - Return if validation fails
---     
---     -- 2. DEPOSIT LOGIC (action == "deposit"):
---     --    - Check if player has enough cash
---     --    - Remove cash from player
---     --    - Add to bank balance
---     --    - Notify player of success/failure
---     
---     -- 3. WITHDRAW LOGIC (action == "withdraw"):
---     --    - Check if player has enough bank balance
---     --    - Remove from bank
---     --    - Add to player cash
---     --    - Notify player of success/failure
---     
---     -- 4. AFTER TRANSACTION:
---     --    - Get updated bank data
---     --    - Send updated data back to client
---     --    - Update UI with new balance
--- end)
+-- --- 5. ADIM: BANKA İŞLEMLERİ ---
+RegisterNetEvent('[SCRIPT_NAME]:server:BankaIslemi', function(action, amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
+    amount = math.floor(tonumber(amount) or 0)
+    if amount <= 0 then return end
 
+    local success = false
+    if action == "deposit" then
+        if Player.Functions.RemoveMoney('cash', amount, "ATM Deposit") then
+            Player.Functions.AddMoney('bank', amount, "ATM Deposit")
+            success = true
+        end
+    elseif action == "withdraw" then
+        if Player.PlayerData.money.bank >= amount then
+            if Player.Functions.RemoveMoney('bank', amount, "ATM Withdraw") then
+                Player.Functions.AddMoney('cash', amount, "ATM Withdraw")
+                success = true
+            end
+        end
+    end
 
--- ============================================
--- HELPER FUNCTION TEMPLATES
--- ============================================
-
--- TODO: Create helper function to get player card info
--- function GetCardInfo(src)
---     -- Get bank_card item info from player
--- end
-
--- TODO: Create helper function to get player account
--- function GetPlayerAccount(src)
---     -- Get player's account/IBAN info
--- end
-
--- TODO: Create helper function to log transactions
--- function LogTransaction(src, action, amount)
---     -- TODO: Optional - Log all transactions to database
--- end
+    if success then
+        local currentBank = Player.Functions.GetMoney('bank')
+        TriggerClientEvent('[SCRIPT_NAME]:client:NUIyeGonder', src, {
+            type = "updateBalance",
+            balance = currentBank
+        })
+        TriggerClientEvent('QBCore:Notify', src, "Transaction Successful: $" .. amount, "success")
+    else
+        TriggerClientEvent('QBCore:Notify', src, "Transaction Failed or Insufficient Funds!", "error")
+    end
+end)

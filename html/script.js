@@ -1,162 +1,130 @@
-/*
- * ============================================
- * AK BANK ATM SYSTEM - JAVASCRIPT LOGIC
- * ============================================
- * 
- * TODO: Implement all JavaScript functionality for:
- * - PIN entry system
- * - NUI message handling
- * - Bank menu interactions
- * - Transaction processing
- */
+let currentPin = "";
+let correctPin = "";
 
-// ============================================
-// PIN ENTRY SYSTEM
-// TODO: Implement PIN input logic
-// ============================================
+// Ses Efektleri
+const clickSound = new Audio('https://www.soundjay.com/buttons/button-16.mp3');
+const errorSound = new Audio('https://www.soundjay.com/buttons/button-10.mp3');
+clickSound.volume = 0.2;
 
-let currentPin = '';
-let correctPin = '';
+window.addEventListener('message', function(event) {
+    // PIN Ekranını Aç
+    if (event.data.type === "openPin") {
+        correctPin = event.data.pin.toString();
+        currentPin = "";
+        $("#bank-wrapper").hide();
+        $("#pin-wrapper").show().css("display", "flex");
+        updateDots(); 
+    }
 
-// TODO: Function to add digit to PIN
-// function addPin(digit) {
-//     -- Add digit to currentPin
-//     -- Update PIN display dots
-//     -- Check if PIN is complete (4 digits)
-//     -- If complete, verify PIN
-// }
+    // Ana Banka Menüsünü Aç / Veri Güncelle
+    if (event.data.type === "openBank") {
+        $("#pin-wrapper").hide();
+        $("#bank-wrapper").show().css("display", "flex");
+        
+        let safeBalance = Number(event.data.balance) || 0;
+        
+        // Verileri Doldur
+        $("#playerName").text(event.data.name);
+        $("#ibanText").text(event.data.iban);
+        $("#balanceText").text("$" + safeBalance.toLocaleString());
+        
+        // Inputları temizle (İşlem sonrası kalmasın)
+        $("#amount").val("");
+    }
 
-// TODO: Function to clear PIN
-// function clearPin() {
-//     -- Clear currentPin variable
-//     -- Clear PIN display dots
-// }
+    // YENİ EKLENTİ: Sadece Bakiyeyi Güncelle (Arayüzü yenilemeden)
+    if (event.data.type === "updateBalance") {
+        let safeBalance = Number(event.data.balance) || 0;
+        $("#balanceText").text("$" + safeBalance.toLocaleString());
+        
+        // İşlem sonrası inputları (yazı alanlarını) temizle
+        $("#amount").val("");
+    }
+});
 
-// TODO: Function to verify PIN
-// function verifyPin() {
-//     -- Compare currentPin with correctPin
-//     -- If correct, send success callback to FiveM
-//     -- If wrong, show error and clear
-// }
+// --- SEKME YÖNETİMİ ---
+function switchTab(tabName) {
+    $(".tab-content").removeClass("active");
+    $(".nav-btn").removeClass("active");
+    
+    $(`#tab-${tabName}`).addClass("active");
+    $(`.nav-btn[onclick="switchTab('${tabName}')"]`).addClass("active");
+}
 
-// TODO: Function to close UI
-// function closeUI() {
-//     -- Send close callback to FiveM
-//     -- Hide all UI elements
-//     -- Reset variables
-// }
+// --- PIN İŞLEMLERİ ---
+function addPin(num) {
+    if (currentPin.length < 4) {
+        currentPin += num;
+        clickSound.play();
+        updateDots();
+        
+        if (currentPin.length === 4) {
+            setTimeout(() => { checkPin(); }, 150);
+        }
+    }
+}
 
+function updateDots() {
+    for (let i = 1; i <= 4; i++) {
+        const dot = $(`#dot-${i}`);
+        dot.removeClass('active filled error-state');
 
-// ============================================
-// NUI MESSAGE HANDLING
-// TODO: Setup window.addEventListener for 'message'
-// ============================================
+        if (i <= currentPin.length) {
+            dot.addClass('filled');
+        } else if (i === currentPin.length + 1) {
+            dot.addClass('active');
+        }
+    }
+}
 
-// window.addEventListener('message', function(event) {
-//     let data = event.data;
-//     
-//     // TODO: Handle PIN screen opening
-//     if (data.type === 'openPin') {
-//         -- correctPin = data.pin
-//         -- Show PIN screen
-//         -- Hide bank screen
-//         -- Reset PIN input
-//     }
-//     
-//     // TODO: Handle bank menu opening
-//     if (data.type === 'openBank') {
-//         -- Hide PIN screen
-//         -- Show bank screen
-//         -- Display player name
-//         -- Display IBAN
-//         -- Display balance
-//     }
-// });
+function checkPin() {
+    if (currentPin === correctPin) {
+        $(".dot").css("border-color", "#2ecc71").css("box-shadow", "0 0 20px #2ecc71");
+        setTimeout(() => {
+            $.post(`https://${GetParentResourceName()}/pinSuccess`, JSON.stringify({}));
+            $(".dot").css("border-color", "").css("box-shadow", "");
+        }, 300);
+    } else {
+        errorSound.play();
+        $(".atm-container").addClass("shake-animation");
+        $(".dot").addClass("error-state");
+        
+        setTimeout(() => {
+            $(".atm-container").removeClass("shake-animation");
+            $(".dot").removeClass("error-state");
+            clearPin();
+        }, 600);
+        
+        $.post(`https://${GetParentResourceName()}/pinError`, JSON.stringify({}));
+    }
+}
 
+function clearPin() {
+    currentPin = "";
+    updateDots();
+}
 
-// ============================================
-// BANK MENU OPERATIONS
-// TODO: Implement transaction functions
-// ============================================
+// --- BANKA AKSİYONLARI ---
+function action(type) {
+    let amount = $("#amount").val();
+    if (amount && amount > 0) {
+        $.post(`https://${GetParentResourceName()}/doAction`, JSON.stringify({
+            action: type,
+            amount: parseInt(amount)
+        }));
+    }
+}
 
-// TODO: Function for deposit operation
-// function deposit() {
-//     -- Show amount input
-//     -- Get amount from user
-//     -- Send to server
-//     -- Update balance
-// }
+function closeUI() {
+    $.post(`https://${GetParentResourceName()}/close`, JSON.stringify({}));
+    $("#bank-wrapper").hide();
+    $("#pin-wrapper").hide();
+}
 
-// TODO: Function for withdraw operation
-// function withdraw() {
-//     -- Show amount input
-//     -- Get amount from user
-//     -- Send to server
-//     -- Update balance
-// }
-
-// TODO: Function to process transaction
-// function processTransaction(action, amount) {
-//     -- Validate amount
-//     -- Send request to server
-//     -- Handle response
-//     -- Update UI with new balance
-//     -- Show confirmation message
-// }
-
-
-// ============================================
-// NUI CALLBACKS
-// TODO: Setup callbacks to send data back to FiveM
-// ============================================
-
-// TODO: Example NUI callback
-// $.post('https://' + GetParentResourceName() + '/pinSuccess', JSON.stringify({}), function(data) {
-//     console.log('PIN verified');
-// });
-
-// TODO: Create callbacks for all operations:
-// - pinSuccess: When PIN is correct
-// - pinError: When PIN is wrong
-// - doAction: When transaction is initiated
-// - close: When closing the UI
-
-
-// ============================================
-// HELPER FUNCTIONS
-// TODO: Add utility functions
-// ============================================
-
-// TODO: Function to get resource name
-// function GetParentResourceName() {
-//     -- Return the current resource name
-// }
-
-// TODO: Function to format currency
-// function formatMoney(amount) {
-//     -- Format number as currency
-//     -- Add $ or currency symbol
-// }
-
-// TODO: Function to hide all screens
-// function hideAllScreens() {
-//     -- Hide PIN wrapper
-//     -- Hide bank wrapper
-// }
-
-// TODO: Function to show notifications
-// function showNotification(message, type) {
-//     -- Display notification to user
-//     -- Support different notification types
-// }
-
-
-// ============================================
-// DOM INTERACTIONS
-// TODO: Setup button click handlers and events
-// ============================================
-
-// TODO: Add event listeners for all buttons
-// TODO: Add input validation
-// TODO: Add keyboard support (optional)
-// TODO: Add numeric keypad support (optional)
+// Klavye Desteği
+document.onkeyup = function (data) {
+    if (data.which == 27) closeUI(); // ESC
+    if (data.which >= 96 && data.which <= 105) addPin(data.which - 96); // Numpad
+    if (data.which >= 48 && data.which <= 57) addPin(data.which - 48); // Sayılar
+    if (data.which == 8) clearPin(); // Backspace
+};

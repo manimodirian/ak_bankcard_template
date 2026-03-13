@@ -1,4 +1,4 @@
-# Installation Guide - AK Bank Card System Template
+# Installation Guide - AK Bank Card System Template (Low Version)
 
 ## Prerequisites
 
@@ -50,26 +50,23 @@ Add the `bank_card` item to your items database in QB-Core:
 }
 ```
 
-### 4. Implementation
+### 4. Configure Default PIN
 
-Now you need to complete the implementation:
+In `server/main.lua`, set the default PIN for new players:
 
-1. **Client Implementation** (`client/main.lua`):
-   - Set up qb-target for ATMs
-   - Implement card control logic
-   - Add NUI callbacks
-   - Create animations
+```lua
+local DEFAULT_PIN = "[DEFAULT_PIN]"  -- Change this to your desired default PIN
+```
 
-2. **Server Implementation** (`server/main.lua`):
-   - Implement player load event
-   - Create transaction processing
-   - Add data retrieval functions
+## Features
 
-3. **HTML/CSS/JS** (`html/` folder):
-   - Design PIN entry screen
-   - Create bank menu interface
-   - Implement form handling
-   - Add styling and animations
+This low-version template includes:
+
+- **PIN Authentication**: 4-digit PIN entry with visual feedback
+- **Deposit Money**: Add cash to bank account
+- **Withdraw Money**: Remove money from bank account
+- **ATM Interface**: Clean, modern UI with card display
+- **Basic Security**: PIN verification and error handling
 
 ## Dependencies Explanation
 
